@@ -7,7 +7,6 @@ let chatInterval
 let lookInterval
 
 function startBot() {
-
   console.log("Đang khởi động bot...")
 
   bot = mineflayer.createBot({
@@ -18,88 +17,68 @@ function startBot() {
   })
 
   bot.once("spawn", () => {
-
     console.log("Bot đã vào world")
 
-    // DI CHUYỂN NGẪU NHIÊN
+    // FIX: NHẢY 1 GIÂY / 1 LẦN VÀ DI CHUYỂN
     moveInterval = setInterval(() => {
-
       if (!bot.entity) return
 
-      const actions = ["forward","back","left","right"]
-      const action = actions[Math.floor(Math.random()*actions.length)]
+      const actions = ["forward", "back", "left", "right"]
+      const action = actions[Math.floor(Math.random() * actions.length)]
 
       bot.clearControlStates()
       bot.setControlState(action, true)
 
-      // nhảy
+      // Nhảy mỗi giây
       bot.setControlState("jump", true)
 
       setTimeout(() => {
         bot.setControlState("jump", false)
         bot.clearControlStates()
-      }, 600)
+      }, 500) // Nhảy lên 0.5s rồi hạ xuống
 
-      // vung tay
       bot.swingArm()
 
-    }, 4000)
+    }, 1000) // Chạy lại mỗi 1000ms (1 giây)
 
-    // XOAY ĐẦU NHƯ PLAYER
+    // FIX: XOAY ĐẦU MƯỢT MÀ HƠN
     lookInterval = setInterval(() => {
-
+      if (!bot.entity) return
+      
       const yaw = Math.random() * Math.PI * 2
       const pitch = (Math.random() - 0.5) * 0.5
 
-      bot.look(yaw, pitch, true)
+      // Đổi sang 'false' để bot xoay đầu từ từ cho giống người
+      bot.look(yaw, pitch, false) 
 
-    }, 3000)
+    }, 1500) // Xoay đầu nhanh hơn một chút (mỗi 1.5 giây)
 
-    // CHAT NGẪU NHIÊN
-    const messages = [
-      "hello",
-      "hi everyone",
-      "nice server",
-      "anyone online?",
-      "im here",
-      "lol"
-    ]
-
+    const messages = ["hello", "hi everyone", "nice server", "anyone online?", "im here", "lol"]
     chatInterval = setInterval(() => {
-
-      const msg = messages[Math.floor(Math.random()*messages.length)]
+      const msg = messages[Math.floor(Math.random() * messages.length)]
       bot.chat(msg)
-
     }, 90000)
-
   })
 
-  // PHẦN THÊM CODE ĐĂNG NHẬP / ĐĂNG KÝ
-  // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ THEO FILE AUTHME CỦA BẠN
- // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ
+  // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ
   bot.on("messagestr", (msg) => {
     const message = msg.toLowerCase();
-
     if (message.includes("đăng ký") || message.includes("register")) {
-      // Mật khẩu mới không dấu và đủ dài
       bot.chat("/register thienmakeios123 thienmakeios123");
       console.log("=> Đã gửi lệnh register: thienmakeios123");
     } 
-    
     else if (message.includes("đăng nhập") || message.includes("login")) {
       bot.chat("/login thienmakeios123");
       console.log("=> Đã gửi lệnh login: thienmakeios123");
     }
-  });
-  
-    console.log("Bot mất kết nối, reconnect sau 10s...")
+  })
 
+  bot.on("end", () => {
+    console.log("Bot mất kết nối, reconnect sau 10s...")
     clearInterval(moveInterval)
     clearInterval(chatInterval)
     clearInterval(lookInterval)
-
     setTimeout(startBot, 10000)
-
   })
 
   bot.on("error", (err) => console.log("Lỗi:", err.message))
@@ -108,15 +87,7 @@ function startBot() {
 
 startBot()
 
-// web server để giữ bot online (Render/UptimeRobot)
 const app = express()
-
-app.get("/", (req,res)=>{
-  res.send("Bot Minecraft đang chạy")
-})
-
+app.get("/", (req, res) => res.send("Bot Minecraft đang chạy"))
 const PORT = process.env.PORT || 3000
-
-app.listen(PORT, ()=>{
-  console.log("Web server chạy port",PORT)
-})
+app.listen(PORT, () => console.log("Web server chạy port", PORT))
