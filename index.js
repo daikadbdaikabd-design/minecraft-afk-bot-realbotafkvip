@@ -76,22 +76,22 @@ function startBot() {
 
   // PHẦN THÊM CODE ĐĂNG NHẬP / ĐĂNG KÝ
   // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ THEO FILE AUTHME CỦA BẠN
+ // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ
   bot.on("messagestr", (msg) => {
     const message = msg.toLowerCase();
 
-    // Kiểm tra tin nhắn chứa từ khóa "đăng ký" hoặc "register"
     if (message.includes("đăng ký") || message.includes("register")) {
-      bot.chat("/register bot123 bot123");
-      console.log("=> Đã gửi lệnh: /register bot123 bot123");
+      // Mật khẩu mới không dấu và đủ dài
+      bot.chat("/register thienmakeios123 thienmakeios123");
+      console.log("=> Đã gửi lệnh register: thienmakeios123");
     } 
     
-    // Kiểm tra tin nhắn chứa từ khóa "đăng nhập" hoặc "login"
     else if (message.includes("đăng nhập") || message.includes("login")) {
-      bot.chat("/login bot123");
-      console.log("=> Đã gửi lệnh: /login bot123");
+      bot.chat("/login thienmakeios123");
+      console.log("=> Đã gửi lệnh login: thienmakeios123");
     }
   });
-
+  
     console.log("Bot mất kết nối, reconnect sau 10s...")
 
     clearInterval(moveInterval)
