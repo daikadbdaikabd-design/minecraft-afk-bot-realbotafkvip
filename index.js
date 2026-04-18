@@ -13,7 +13,7 @@ function startBot() {
   bot = mineflayer.createBot({
     host: "191.96.231.27",
     port: 10570,
-    username: "24/7",
+    username: "HexMine_24h7",
     version: "1.20.1"
   })
 
