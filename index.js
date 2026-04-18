@@ -75,22 +75,22 @@ function startBot() {
   })
 
   // PHẦN THÊM CODE ĐĂNG NHẬP / ĐĂNG KÝ
+  // XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ THEO FILE AUTHME CỦA BẠN
   bot.on("messagestr", (msg) => {
-    // Chuyển tin nhắn về chữ thường để dễ kiểm tra
-    const message = msg.toLowerCase()
+    const message = msg.toLowerCase();
 
-    if (message.includes("/register")) {
-      bot.chat("/register bot123 bot123")
-      console.log("Đã thực hiện lệnh register")
+    // Kiểm tra tin nhắn chứa từ khóa "đăng ký" hoặc "register"
+    if (message.includes("đăng ký") || message.includes("register")) {
+      bot.chat("/register bot123 bot123");
+      console.log("=> Đã gửi lệnh: /register bot123 bot123");
     } 
     
-    if (message.includes("/login")) {
-      bot.chat("/login bot123")
-      console.log("Đã thực hiện lệnh login")
+    // Kiểm tra tin nhắn chứa từ khóa "đăng nhập" hoặc "login"
+    else if (message.includes("đăng nhập") || message.includes("login")) {
+      bot.chat("/login bot123");
+      console.log("=> Đã gửi lệnh: /login bot123");
     }
-  })
-
-  bot.on("end", () => {
+  });
 
     console.log("Bot mất kết nối, reconnect sau 10s...")
 
