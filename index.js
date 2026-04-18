@@ -13,7 +13,7 @@ function startBot() {
   bot = mineflayer.createBot({
     host: "191.96.231.27",
     port: 10570,
-    username: "KimAnh2k9",
+    username: "24/7",
     version: "1.20.1"
   })
 
@@ -74,16 +74,20 @@ function startBot() {
 
   })
 
-  bot.on("message", (jsonMsg) => {
+  // PHẦN THÊM CODE ĐĂNG NHẬP / ĐĂNG KÝ
+  bot.on("messagestr", (msg) => {
+    // Chuyển tin nhắn về chữ thường để dễ kiểm tra
+    const message = msg.toLowerCase()
 
-    const msg = jsonMsg.toString()
-
-    if (msg.includes("/register"))
+    if (message.includes("/register")) {
       bot.chat("/register bot123 bot123")
-
-    if (msg.includes("/login"))
+      console.log("Đã thực hiện lệnh register")
+    } 
+    
+    if (message.includes("/login")) {
       bot.chat("/login bot123")
-
+      console.log("Đã thực hiện lệnh login")
+    }
   })
 
   bot.on("end", () => {
