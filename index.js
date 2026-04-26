@@ -9,7 +9,7 @@ function startBot() {
 
   bot = mineflayer.createBot({
     host: "1191.96.231.25",
-    port:  13740,
+    port: 13740,
     username: "BoxPvP_24h7",
     version: "1.20.1"
   })
