@@ -8,8 +8,8 @@ function startBot() {
   console.log("Đang khởi động bot...")
 
   bot = mineflayer.createBot({
-    host: "191.96.231.27",
-    port: 10570,
+    host: "15.235.215.108",
+    port: 11446,
     username: "NuZivus",
     version: "1.20.1"
   })
